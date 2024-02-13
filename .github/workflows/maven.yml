@@ -36,7 +36,9 @@ jobs:
         run: mkdir -p ~/.ssh
 
       - name: Setup SSH key
-        run: echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+        run: |
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
@@ -48,3 +50,6 @@ jobs:
           key: ~/.ssh/id_rsa
           script: |
             scp -v -o StrictHostKeyChecking=no $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war ec2-user@${{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps/
+          # Optional: Enable debug logging for troubleshooting
+          # env:
+          #   INPUT_DEBUG: true
