@@ -42,4 +42,4 @@ jobs:
         username: ${{ secrets.TOMCAT_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          scp -o StrictHostKeyChecking=no /home/runner/work/GitHub-Action-Power-Cloud/GitHub-Action-Power-Cloud/web/target/time-tracker-web-0.5.0-SNAPSHOT.war ${{ secrets.TOMCAT_USERNAME }}@${{ secrets.TOMCAT_HOST }}:/path/to/tomcat/webapps/ROOT.war
+          scp -o StrictHostKeyChecking=no /home/runner/work/GitHub-Action-Power-Cloud/GitHub-Action-Power-Cloud/web/target/time-tracker-web-0.5.0-SNAPSHOT.war ec2-user@18.139.110.66:/opt/tomcat/webapps/
