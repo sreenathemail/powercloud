@@ -25,7 +25,7 @@ jobs:
           ls -la $GITHUB_WORKSPACE/web
 
       - name: Deploy to Tomcat
-        uses: appleboy/ssh-action@main
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.TOMCAT_HOST }}
           username: ${{ secrets.TOMCAT_USERNAME }}
