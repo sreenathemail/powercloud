@@ -25,7 +25,7 @@ jobs:
       - name: Debug workspace
         run: |
           ls -la $GITHUB_WORKSPACE
-          ls -la $GITHUB_WORKSPACE/web
+          ls -la $GITHUB_WORKSPACE/web/target
 
   # deploy:
   #   needs: build
