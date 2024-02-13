@@ -37,12 +37,13 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: <your-aws-region> # Specify your AWS region here
+          aws-region: powercloud21 # Specify your AWS region here
 
       - name: Upload WAR to S3
-        uses: aws-actions/aws-s3@v2
+        uses: aws-actions/setup-python@v2
         with:
-          command: upload
-          bucket-name: powercloud21
-          path: web/time-tracker-web-0.5.0-SNAPSHOT.war
-          local-path: $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war
+          command: "aws-s3"
+          args: "cp $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war s3://<your-s3-bucket-name>/web/time-tracker-web-0.5.0-SNAPSHOT.war"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
