@@ -19,33 +19,22 @@ jobs:
         with:
           java-version: '8'
           distribution: 'temurin'
-          # cache: maven
 
       - name: Build with Maven
         run: mvn clean package
 
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
 
-  #   steps:
+    steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region:  ap-south-1 # Specify your AWS region here
-
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.7' # Specify the Python version you want to use
-
       - name: Upload WAR to S3
-        run: aws s3 cp /home/runner/work/GitHub-Action-Power-Cloud/GitHub-Action-Power-Cloud/web/target/time-tracker-web-0.5.0-SNAPSHOT.war s3://powercloud21/web/time-tracker-web-0.5.0-SNAPSHOT.war
+        run: |
+          aws s3 cp $GITHUB_WORKSPACE/web/target/time-tracker-web-0.5.0-SNAPSHOT.war s3://your-bucket-name/web/time-tracker-web-0.5.0-SNAPSHOT.war
         env:
+          AWS_DEFAULT_REGION: your-region
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
