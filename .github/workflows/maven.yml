@@ -55,5 +55,6 @@ jobs:
           username: ${{ secrets.TOMCAT_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            ssh-keyscan -H ${{ secrets.TOMCAT_HOST }} >> ~/.ssh/known_hosts
             scp -v -o StrictHostKeyChecking=no /tmp/*.war ${{ secrets.TOMCAT_USERNAME }}@${{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps/
             ssh ${{ secrets.TOMCAT_USERNAME }}@${{ secrets.TOMCAT_HOST }} 'sudo systemctl restart tomcat'
