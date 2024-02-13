@@ -26,6 +26,8 @@ jobs:
         run: |
           ls -la $GITHUB_WORKSPACE
           ls -la $GITHUB_WORKSPACE/web/target
+          cd $GITHUB_WORKSPACE/web/target
+          pwd
 
   # deploy:
   #   needs: build
