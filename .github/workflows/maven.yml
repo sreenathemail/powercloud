@@ -30,6 +30,16 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-    # - name: Update dependency graph
-    #   uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to Tomcat
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.TOMCAT_HOST }}
+        username: ${{ secrets.TOMCAT_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          scp -o StrictHostKeyChecking=no /home/runner/work/GitHub-Action-Power-Cloud/GitHub-Action-Power-Cloud/web/target/time-tracker-web-0.5.0-SNAPSHOT.war ${{ secrets.TOMCAT_USERNAME }}@${{ secrets.TOMCAT_HOST }}:/path/to/tomcat/webapps/ROOT.war
