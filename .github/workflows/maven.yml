@@ -53,6 +53,6 @@ jobs:
           scp -o StrictHostKeyChecking=no -P 8080 /tmp/*.war ec2-user@${{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps
         env:
           TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
-          TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
-          TOMCAT_USERNAME: ${{ secrets.TOMCAT_USERNAME }}
-          TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
+          # TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
+          # TOMCAT_USERNAME: ${{ secrets.TOMCAT_USERNAME }}
+          # TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
