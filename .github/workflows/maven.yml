@@ -22,6 +22,10 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package
+      - name: Debug workspace
+        run: |
+          ls -la $GITHUB_WORKSPACE
+          ls -la $GITHUB_WORKSPACE/web
 
   # deploy:
   #   needs: build
