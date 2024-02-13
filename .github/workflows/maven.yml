@@ -52,7 +52,7 @@ jobs:
         run: |
           curl --user ${{ secrets.TOMCAT_USERNAME }}:$${{ secrets.TOMCAT_PASSWORD }} \
                --upload-file /tmp/*.war \
-               "http://${{ secrets.TOMCAT_HOST }}:${{ secrets.TOMCAT_PORT }}/manager/text/deploy?path=/webapp&update=true"
+               "http://${{ secrets.TOMCAT_HOST }}:${{ secrets.TOMCAT_PORT }}/manager/text/deploy?path=/opt/tomcat/webapps/&update=true"
         env:
           TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
           TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
