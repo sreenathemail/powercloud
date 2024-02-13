@@ -1,4 +1,4 @@
-name: Java CI with Maven and Tomcat Deployment
+name: Java CI with Maven and S3 Deployment
 
 on:
   push:
@@ -32,26 +32,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create SSH directory
-        run: mkdir -p ~/.ssh
-
-      - name: Setup SSH key
-        run: |
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Verify Secret Access
-        run: echo "$SSH_PRIVATE_KEY"
-      - name: Deploy WAR to Tomcat
-        uses: appleboy/ssh-action@master
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          host: ${{ secrets.TOMCAT_HOST }}
-          username: ${{ secrets.TOMCAT_USERNAME }}
-          key: ~/.ssh/id_rsa
-          script: |
-            scp -v -o StrictHostKeyChecking=no $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war ec2-user@${{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps/
-              Optional: Enable debug logging for troubleshooting
-                env:
-                  INPUT_DEBUG: true
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: <your-aws-region> # Specify your AWS region here
+
+      - name: Upload WAR to S3
+        uses: aws-actions/aws-s3@v2
+        with:
+          command: upload
+          bucket-name: powercloud21
+          path: web/time-tracker-web-0.5.0-SNAPSHOT.war
+          local-path: $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war
