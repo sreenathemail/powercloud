@@ -50,7 +50,7 @@ jobs:
       
       - name: Deploy .war file to Tomcat
         run: |
-          scp -o StrictHostKeyChecking=no -P $${{ secrets.TOMCAT_PORT }} /tmp/*.war ec2-user@${{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps
+          scp -o StrictHostKeyChecking=no -P ${{ secrets.TOMCAT_PORT }} /tmp/*.war ec2-user@${{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps
         env:
           TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
           TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
