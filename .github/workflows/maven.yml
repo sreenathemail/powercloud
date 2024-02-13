@@ -31,3 +31,28 @@ jobs:
           AWS_DEFAULT_REGION: ap-south-1
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+		  
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+	
+	steps:
+	
+      - name: Upload WAR to S3
+        run: |
+          response=$(aws s3 cp s3://powercloud21/*.war /tmp/)
+          echo "AWS SDK Response: $response"
+        env:
+          AWS_DEFAULT_REGION: ap-south-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+	
+      - name: Deploy WAR to Tomcat
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.TOMCAT_HOST }}
+          username: ${{ secrets.TOMCAT_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo cp /tmp/*.war /opt/tomcat/webapps/
+            sudo systemctl restart tomcat
