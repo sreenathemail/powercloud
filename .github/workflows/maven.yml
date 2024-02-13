@@ -49,12 +49,12 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
       - name: Deploy WAR to Tomcat
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.TOMCAT_HOST }}
-          username: ${{ secrets.TOMCAT_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            ssh-keyscan -H ${{ secrets.TOMCAT_HOST }} >> ~/.ssh/known_hosts
-            scp -v -o StrictHostKeyChecking=no /tmp/*.war ${{ secrets.TOMCAT_USERNAME }}@${{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps/
-            ssh ${{ secrets.TOMCAT_USERNAME }}@${{ secrets.TOMCAT_HOST }} 'sudo systemctl restart tomcat'
+        run: |
+          curl --user ${{ secrets.TOMCAT_USERNAME }}:$${{ secrets.TOMCAT_PASSWORD }} \
+               --upload-file /tmp/*.war \
+               "http://${{ secrets.TOMCAT_HOST }}:${{ secrets.TOMCAT_PORT }}/manager/text/deploy?path=/webapp&update=true"
+        env:
+          TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
+          TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
+          TOMCAT_USERNAME: ${{ secrets.TOMCAT_USERNAME }}
+          TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
