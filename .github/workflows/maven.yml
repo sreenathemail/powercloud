@@ -48,11 +48,13 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
-      - name: Deploy .war file to Tomcat
+      - name: Deploy WAR to Tomcat
         run: |
-          scp -o StrictHostKeyChecking=no -P 8080 /tmp/*.war ec2-user@${{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps
+          curl --user ${{ secrets.TOMCAT_USERNAME }}:${{ secrets.TOMCAT_PASSWORD }} \
+               --upload-file /tmp/*.war \
+               "http://${{ secrets.TOMCAT_HOST }}:${{ secrets.TOMCAT_PORT }}/manager/text/deploy?path=/opt/tomcat/webapps/&update=true"
         env:
           TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
-          # TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
-          # TOMCAT_USERNAME: ${{ secrets.TOMCAT_USERNAME }}
-          # TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
+          TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
+          TOMCAT_USERNAME: ${{ secrets.TOMCAT_USERNAME }}
+          TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
