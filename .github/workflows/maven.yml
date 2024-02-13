@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: Upload WAR to S3
         run: |
-          response=$(aws s3 cp s3://powercloud21/*.war /tmp/)
+          response=$(aws s3 cp s3://powercloud21/time-tracker-web-0.5.0-SNAPSHOT.war /tmp/)
           echo "AWS SDK Response: $response"
         env:
           AWS_DEFAULT_REGION: ap-south-1
