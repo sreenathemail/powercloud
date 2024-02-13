@@ -45,6 +45,6 @@ jobs:
         with:
           host: ${{ secrets.TOMCAT_HOST }}
           username: ${{ secrets.TOMCAT_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ~/.ssh/id_rsa
           script: |
-            scp -v -o StrictHostKeyChecking=no $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war ec2-user@18.139.110.66:/opt/tomcat/webapps/
+            scp -v -o StrictHostKeyChecking=no $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war ec2-user@${{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps/
