@@ -27,6 +27,7 @@ jobs:
           ls -la $GITHUB_WORKSPACE
           ls -la $GITHUB_WORKSPACE/web/target
           cd $GITHUB_WORKSPACE/web/target
+          aws s3 cp $GITHUB_WORKSPACE/web/target/*.war s3://powercloud21/
           pwd
 
   # deploy:
