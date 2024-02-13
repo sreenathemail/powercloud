@@ -36,6 +36,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
       - name: Upload WAR to S3
         run: |
           response=$(aws s3 cp s3://powercloud21/time-tracker-web-0.5.0-SNAPSHOT.war /tmp/)
