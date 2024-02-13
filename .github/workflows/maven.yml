@@ -49,7 +49,8 @@ jobs:
           username: ${{ secrets.TOMCAT_USERNAME }}
           key: ~/.ssh/id_rsa
           script: |
-            scp -v -o StrictHostKeyChecking=no $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war ec2-user@${{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps/
-          # Optional: Enable debug logging for troubleshooting
-          # env:
-          #   INPUT_DEBUG: true
+            scp -v -o StrictHostKeyChecking=no $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war ec2-user@$
+            {{ secrets.TOMCAT_HOST }}:/opt/tomcat/webapps/
+          Optional: Enable debug logging for troubleshooting
+          env:
+            INPUT_DEBUG: true
