@@ -21,6 +21,7 @@ jobs:
         run: mvn clean package
       - name: Debug workspace
         run: |
+          pwd
           ls -la $GITHUB_WORKSPACE
           ls -la $GITHUB_WORKSPACE/web
 
