@@ -48,11 +48,9 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
-      - name: Deploy WAR to Tomcat
+      - name: Deploy .war file to Tomcat
         run: |
-          curl --user ${{ secrets.TOMCAT_USERNAME }}:$${{ secrets.TOMCAT_PASSWORD }} \
-               --upload-file /tmp/*.war \
-               "http://${{ secrets.TOMCAT_HOST }}:${{ secrets.TOMCAT_PORT }}/manager/text/deploy?path=/opt/tomcat/webapps/&update=true"
+          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ec2-user@18.139.110.66 'sudo cp /tmp/*.war /opt/tomcat/webapps/'
         env:
           TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
           TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
