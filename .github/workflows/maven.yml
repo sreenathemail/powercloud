@@ -39,11 +39,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: powercloud21 # Specify your AWS region here
 
-      - name: Upload WAR to S3
-        uses: aws-actions/setup-python@v2
+      - name: Install Python
+        uses: actions/setup-python@v2
         with:
-          command: "aws-s3"
-          args: "cp $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war s3://<your-s3-bucket-name>/web/time-tracker-web-0.5.0-SNAPSHOT.war"
+          python-version: '3.7' # Specify the Python version you want to use
+
+      - name: Upload WAR to S3
+        run: aws s3 cp $GITHUB_WORKSPACE/web/time-tracker-web-0.5.0-SNAPSHOT.war s3://<your-s3-bucket-name>/web/time-tracker-web-0.5.0-SNAPSHOT.war
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
