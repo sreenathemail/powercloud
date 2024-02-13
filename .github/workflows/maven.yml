@@ -39,7 +39,7 @@ jobs:
 
       - name: Upload WAR to S3
         run: |
-          aws s3 cp /home/runner/work/GitHub-Action-Power-Cloud/GitHub-Action-Power-Cloud/web/target/*.war s3://powercloud21/time-tracker-web-0.5.0-SNAPSHOT.war
+          aws s3 cp /home/runner/work/GitHub-Action-Power-Cloud/GitHub-Action-Power-Cloud/web/target/*.war s3://powercloud21
         env:
           AWS_DEFAULT_REGION: your-region
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
