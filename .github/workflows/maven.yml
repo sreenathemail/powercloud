@@ -34,27 +34,16 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
         
       - name: Upload WAR to S3
         run: |
-          response=$(aws s3 cp s3://powercloud21/time-tracker-web-0.5.0-SNAPSHOT.war /tmp/)
+          aws s3 cp s3://powercloud21/time-tracker-web-0.5.0-SNAPSHOT.war /tmp/
           echo "AWS SDK Response: $response"
         env:
           AWS_DEFAULT_REGION: ap-south-1
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
       - name: Deploy WAR to Tomcat
         run: |
-          curl --user ${{ secrets.TOMCAT_USERNAME }}:${{ secrets.TOMCAT_PASSWORD }} \
-               --upload-file /tmp/*.war \
-               "http://${{ secrets.TOMCAT_HOST }}:${{ secrets.TOMCAT_PORT }}/manager/text/deploy?path=/opt/tomcat/webapps/&update=true"
-        env:
-          TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
-          TOMCAT_PORT: ${{ secrets.TOMCAT_PORT }}
-          TOMCAT_USERNAME: ${{ secrets.TOMCAT_USERNAME }}
-          TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
+          sudo cp /tmp/time-tracker-web-0.5.0-SNAPSHOT.war /opt/tomcat/webapps
