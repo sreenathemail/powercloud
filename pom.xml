@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>training.taylor.power-cloud</groupId>
-    <artifactId>power-cloud-parent</artifactId>
+    <groupId>training.taylor.time-tracker</groupId>
+    <artifactId>time-tracker-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.0</version>
-    <name>power cloud (Parent)</name>
+    <version>0.5.0-SNAPSHOT</version>
+    <name>Time Tracker (Parent)</name>
     <description>
         This is a simple Maven / Java web project.
     </description>
@@ -28,6 +28,7 @@
     </modules>
 
     <build>
+        <finalName>Power-Cloud-1</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
