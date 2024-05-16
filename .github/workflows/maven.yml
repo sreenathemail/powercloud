@@ -25,7 +25,7 @@ jobs:
       
       - name: Upload WAR to S3
         run: |
-          response=$(aws s3 cp $GITHUB_WORKSPACE/web/target/*.war s3://Power-Cloud-1/)
+          response=$(aws s3 cp $GITHUB_WORKSPACE/web/target/*.war s3://powercloud83/)
           echo "AWS SDK Response: $response"
         env:
           AWS_DEFAULT_REGION: ap-south-1
@@ -39,11 +39,11 @@ jobs:
         
       - name: Upload WAR to S3
         run: |
-          aws s3 cp s3://Power-Cloud-1/time-tracker-web-0.5.0-SNAPSHOT.war /tmp/
+          aws s3 cp s3://powercloud83/Power-Cloud-1.war /tmp/
           echo "AWS SDK Response: $response"
         env:
           AWS_DEFAULT_REGION: ap-south-1
       
       - name: Deploy WAR to Tomcat
         run: |
-          sudo cp /tmp/time-tracker-web-0.5.0-SNAPSHOT.war /opt/tomcat/webapps
+          sudo cp /tmp/Power-Cloud-1.war /opt/tomcat/webapps
