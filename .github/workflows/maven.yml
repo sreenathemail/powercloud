@@ -47,3 +47,4 @@ jobs:
       - name: Deploy WAR to Tomcat
         run: |
           sudo cp /tmp/Power-Cloud-1.war /opt/tomcat/webapps
+
